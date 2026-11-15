@@ -5,6 +5,7 @@ $st = db()->prepare('SELECT * FROM books WHERE id = ?');
 $st->execute([(int)($_GET['id'] ?? 0)]);
 $b = $st->fetch();
 $path = $b ? __DIR__ . '/uploads/' . basename($b['filename']) : '';
+if ($b && $b['hidden'] && user()['role'] !== 'admin') { $b = null; }
 if (!$b || !is_file($path)) { http_response_code(404); exit('ไม่พบหนังสือ'); }
 header('Content-Type: application/pdf');
 header('Content-Disposition: inline; filename="book-' . (int)$b['id'] . '.pdf"');

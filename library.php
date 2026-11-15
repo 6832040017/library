@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/config.php';
 require_login();
-$books = db()->query('SELECT id, title, author FROM books ORDER BY id DESC')->fetchAll();
+$books = db()->query('SELECT id, title, author FROM books WHERE hidden = 0 ORDER BY id DESC')->fetchAll();
 page_start('หนังสือทั้งหมด'); ?>
 <h2>หนังสือทั้งหมด</h2>
 <?php if (!$books) { echo '<p>ยังไม่มีหนังสือ</p>'; } else { ?>

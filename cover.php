@@ -1,9 +1,10 @@
 <?php
 require __DIR__ . '/config.php';
 require_login();
-$st = db()->prepare('SELECT filename FROM books WHERE id = ?');
+$st = db()->prepare('SELECT filename, hidden FROM books WHERE id = ?');
 $st->execute([(int)($_GET['id'] ?? 0)]);
 $b = $st->fetch();
+if ($b && $b['hidden'] && user()['role'] !== 'admin') { $b = null; }
 $f = $b ? __DIR__ . '/covers/' . basename($b['filename'], '.pdf') . '.jpg' : '';
 if ($b && is_file($f)) {
     header('Content-Type: image/jpeg');

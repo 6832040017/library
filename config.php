@@ -13,6 +13,12 @@ function db(): PDO {
             $cfg['user'], $cfg['pass'],
             [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]
         );
+        // เพิ่มคอลัมน์ hidden ให้อัตโนมัติ (สำหรับฐานข้อมูลเดิมที่ยังไม่มี)
+        try {
+            if (!$pdo->query("SHOW COLUMNS FROM books LIKE 'hidden'")->fetch()) {
+                $pdo->exec('ALTER TABLE books ADD COLUMN hidden TINYINT(1) NOT NULL DEFAULT 0');
+            }
+        } catch (PDOException $ex) { /* ถ้าไม่มีสิทธิ์ ALTER ให้รัน SQL ใน README เอง */ }
     }
     return $pdo;
 }
@@ -64,6 +70,19 @@ legend{padding:0 .5rem;font-weight:600;color:var(--c)}
 .btn{display:block;margin-top:auto;background:#eef2ff;color:var(--c);text-decoration:none;padding:.5rem 1rem;border-radius:999px;font-size:.9rem;text-align:center;font-weight:500;transition:background .15s,color .15s}
 .btn:hover{background:var(--c);color:#fff}
 .book .info .btn{margin-top:auto}
+td.thumb{width:56px}
+td.thumb img{width:44px;aspect-ratio:3/4;object-fit:cover;border-radius:6px;background:#eef2ff;display:block}
+td.actions{white-space:nowrap;text-align:right}
+td.actions form{display:inline;margin:0}
+td.actions a,td.actions button{display:inline-block;margin:0 0 0 .3rem;font-size:.9rem;padding:.3rem .9rem;border-radius:999px;border:0;cursor:pointer;font-family:inherit;vertical-align:middle}
+tr.is-hidden td{opacity:.55}
+.badge{display:inline-block;margin-left:.4rem;padding:.1rem .6rem;border-radius:999px;background:#f3f4f6;color:#6b7280;font-size:.75rem;vertical-align:middle}
+td.actions button.soft{background:#eef2ff;color:var(--c)}
+td.actions button.soft:hover{background:var(--c);color:#fff;opacity:1}
+button.danger{background:#fef2f2;color:#b91c1c}
+button.danger:hover{background:#b91c1c;color:#fff;opacity:1}
+.hint{display:block;color:#6b7280;font-size:.85rem;margin-top:.5rem}
+a.cancel{color:#6b7280;margin-left:.5rem;text-decoration:none}
 CSS;
 
 function make_cover(string $pdfName): bool {
