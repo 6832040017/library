@@ -57,11 +57,11 @@ legend{padding:0 .5rem;font-weight:600;color:var(--c)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1.25rem;margin-top:1.25rem}
 .book{background:#fff;border:1px solid #e5e7eb;border-radius:14px;overflow:hidden;display:flex;flex-direction:column;transition:transform .15s,box-shadow .15s}
 .book:hover{transform:translateY(-4px);box-shadow:0 10px 24px rgba(79,70,229,.18)}
-.book img{width:100%;aspect-ratio:3/4;object-fit:cover;background:#eef2ff;display:block}
+.book img{width:100%;aspect-ratio:3/4;object-fit:contain;background:#eef2ff;display:block}
 .book .info{padding:.75rem .85rem 1rem;display:flex;flex-direction:column;gap:.25rem;flex:1}
 .book .title{font-weight:600;font-size:.95rem;line-height:1.3}
 .book .author{color:#6b7280;font-size:.85rem}
-.btn{display:inline-block;margin-top:.5rem;background:#eef2ff;color:var(--c);text-decoration:none;padding:.35rem 1rem;border-radius:999px;font-size:.9rem;text-align:center}
+.btn{display:inline-block;margin-top:auto;background:#eef2ff;color:var(--c);text-decoration:none;padding:.35rem 1rem;border-radius:999px;font-size:.9rem;text-align:center}
 .btn:hover{background:var(--c);color:#fff}
 CSS;
 
