@@ -54,15 +54,16 @@ fieldset{border:1px solid #e5e7eb;border-radius:12px;margin:0 0 1.5rem;padding:1
 legend{padding:0 .5rem;font-weight:600;color:var(--c)}
 .err{background:#fef2f2;color:#b91c1c;padding:.7rem 1rem;border-radius:10px}
 .ok{background:#f0fdf4;color:#15803d;padding:.7rem 1rem;border-radius:10px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1.25rem;margin-top:1.25rem}
-.book{background:#fff;border:1px solid #e5e7eb;border-radius:14px;overflow:hidden;display:flex;flex-direction:column;transition:transform .15s,box-shadow .15s}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1.25rem;margin-top:1.25rem;align-items:stretch}
+.book{background:#fff;border:1px solid #e5e7eb;border-radius:14px;overflow:hidden;display:flex;flex-direction:column;height:100%;transition:transform .15s,box-shadow .15s}
 .book:hover{transform:translateY(-4px);box-shadow:0 10px 24px rgba(79,70,229,.18)}
-.book img{width:100%;aspect-ratio:3/4;object-fit:contain;background:#eef2ff;display:block}
-.book .info{padding:.75rem .85rem 1rem;display:flex;flex-direction:column;gap:.25rem;flex:1}
-.book .title{font-weight:600;font-size:.95rem;line-height:1.3}
-.book .author{color:#6b7280;font-size:.85rem}
-.btn{display:inline-block;margin-top:auto;background:#eef2ff;color:var(--c);text-decoration:none;padding:.35rem 1rem;border-radius:999px;font-size:.9rem;text-align:center}
+.book img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:center top;background:#eef2ff;display:block;flex-shrink:0}
+.book .info{padding:.85rem .9rem 1rem;display:flex;flex-direction:column;gap:.3rem;flex:1}
+.book .title{font-weight:600;font-size:.95rem;line-height:1.35;word-break:break-word}
+.book .author{color:#6b7280;font-size:.85rem;margin-bottom:.6rem}
+.btn{display:block;margin-top:auto;background:#eef2ff;color:var(--c);text-decoration:none;padding:.5rem 1rem;border-radius:999px;font-size:.9rem;text-align:center;font-weight:500;transition:background .15s,color .15s}
 .btn:hover{background:var(--c);color:#fff}
+.book .info .btn{margin-top:auto}
 CSS;
 
 function make_cover(string $pdfName): bool {
