@@ -24,6 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         else {
             $name = bin2hex(random_bytes(16)) . '.pdf';
             if (move_uploaded_file($f['tmp_name'], __DIR__ . '/uploads/' . $name)) {
+                make_cover($name);
                 db()->prepare('INSERT INTO books (title, author, filename) VALUES (?,?,?)')->execute([$title, $author, $name]);
                 $msg = 'เพิ่มหนังสือแล้ว';
             } else { $err = 'บันทึกไฟล์ไม่สำเร็จ (เช็กสิทธิ์โฟลเดอร์ uploads)'; }

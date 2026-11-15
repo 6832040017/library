@@ -54,7 +54,27 @@ fieldset{border:1px solid #e5e7eb;border-radius:12px;margin:0 0 1.5rem;padding:1
 legend{padding:0 .5rem;font-weight:600;color:var(--c)}
 .err{background:#fef2f2;color:#b91c1c;padding:.7rem 1rem;border-radius:10px}
 .ok{background:#f0fdf4;color:#15803d;padding:.7rem 1rem;border-radius:10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1.25rem;margin-top:1.25rem}
+.book{background:#fff;border:1px solid #e5e7eb;border-radius:14px;overflow:hidden;display:flex;flex-direction:column;transition:transform .15s,box-shadow .15s}
+.book:hover{transform:translateY(-4px);box-shadow:0 10px 24px rgba(79,70,229,.18)}
+.book img{width:100%;aspect-ratio:3/4;object-fit:cover;background:#eef2ff;display:block}
+.book .info{padding:.75rem .85rem 1rem;display:flex;flex-direction:column;gap:.25rem;flex:1}
+.book .title{font-weight:600;font-size:.95rem;line-height:1.3}
+.book .author{color:#6b7280;font-size:.85rem}
+.btn{display:inline-block;margin-top:.5rem;background:#eef2ff;color:var(--c);text-decoration:none;padding:.35rem 1rem;border-radius:999px;font-size:.9rem;text-align:center}
+.btn:hover{background:var(--c);color:#fff}
 CSS;
+
+function make_cover(string $pdfName): bool {
+    $dir = __DIR__ . '/covers';
+    if (!is_dir($dir)) { @mkdir($dir, 0755, true); }
+    $base = basename($pdfName, '.pdf');
+    $cmd = 'pdftoppm -jpeg -r 70 -f 1 -l 1 -singlefile '
+         . escapeshellarg(__DIR__ . '/uploads/' . $pdfName) . ' '
+         . escapeshellarg($dir . '/' . $base) . ' 2>&1';
+    @shell_exec($cmd);
+    return is_file($dir . '/' . $base . '.jpg');
+}
 
 function page_start(string $title): void {
     $u = user();
