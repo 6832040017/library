@@ -1,0 +1,3 @@
+<?php
+// คัดลอกเป็น config.local.php แล้วแก้ค่า (ไฟล์จริงจะไม่ถูกอัปขึ้น GitHub)
+return ['host' => 'localhost', 'name' => 'library', 'user' => 'libuser', 'pass' => 'ใส่รหัสผ่านDB'];
