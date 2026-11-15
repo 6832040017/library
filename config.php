@@ -63,7 +63,7 @@ function page_start(string $title): void {
        . '<link rel="preconnect" href="https://fonts.googleapis.com">'
        . '<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">'
        . '<style>' . APP_CSS . '</style></head><body' . ($u ? '' : ' class="guest"') . '>'
-       . '<nav><strong>📚 ห้องสมุดออนไลน์</strong>';
+       . '<nav><strong>📚 6832040017\'s Online Library</strong>';
     if ($u) {
         echo '<a href="library.php">หนังสือ</a>';
         if ($u['role'] === 'admin') echo '<a href="admin.php">จัดการระบบ</a>';
