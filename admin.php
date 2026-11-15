@@ -108,7 +108,7 @@ page_start('จัดการระบบ'); ?>
 <?php endif; ?>
 <h3>หนังสือทั้งหมด (<?= count($books) ?>)</h3>
 <?php if (!$books): ?><p>ยังไม่มีหนังสือ</p><?php else: ?>
-<table><tr><th></th><th>ชื่อหนังสือ</th><th>ผู้แต่ง</th><th></th></tr>
+<table class="books"><tr><th class="c-thumb"></th><th>ชื่อหนังสือ</th><th class="c-author">ผู้แต่ง</th><th class="c-act"></th></tr>
 <?php foreach ($books as $b): ?><tr class="<?= $b['hidden'] ? 'is-hidden' : '' ?>">
   <td class="thumb"><img src="cover.php?id=<?= (int)$b['id'] ?>" alt=""></td>
   <td><?= e($b['title']) ?><?php if ($b['hidden']): ?><span class="badge">ซ่อนอยู่</span><?php endif; ?></td><td><?= e($b['author']) ?></td>

@@ -70,6 +70,12 @@ legend{padding:0 .5rem;font-weight:600;color:var(--c)}
 .btn{display:block;margin-top:auto;background:#eef2ff;color:var(--c);text-decoration:none;padding:.5rem 1rem;border-radius:999px;font-size:.9rem;text-align:center;font-weight:500;transition:background .15s,color .15s}
 .btn:hover{background:var(--c);color:#fff}
 .book .info .btn{margin-top:auto}
+table.books{table-layout:fixed}
+table.books th.c-thumb{width:56px}
+table.books th.c-author{width:24%}
+table.books th.c-act{width:250px}
+table.books td{vertical-align:middle;overflow-wrap:anywhere}
+table.books td.actions{overflow-wrap:normal}
 td.thumb{width:56px}
 td.thumb img{width:44px;aspect-ratio:3/4;object-fit:cover;border-radius:6px;background:#eef2ff;display:block}
 td.actions{white-space:nowrap;text-align:right}
