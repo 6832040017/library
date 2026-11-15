@@ -27,20 +27,48 @@ function csrf(): string { return $_SESSION['csrf'] ??= bin2hex(random_bytes(16))
 function check_csrf(): void {
     if (!hash_equals($_SESSION['csrf'] ?? '', $_POST['csrf'] ?? '')) { http_response_code(400); exit('Bad request'); }
 }
+const APP_CSS = <<<'CSS'
+:root{--c:#4f46e5;--c2:#7c3aed;--bg:#f3f4f8;--tx:#1f2937}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Prompt','Noto Sans Thai',system-ui,sans-serif;background:var(--bg);color:var(--tx)}
+nav{background:linear-gradient(135deg,var(--c),var(--c2));color:#fff;padding:.9rem 1.5rem;display:flex;gap:1rem;align-items:center;flex-wrap:wrap;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+nav strong{font-size:1.2rem;margin-right:auto}
+nav a{color:#fff;text-decoration:none;opacity:.9;padding:.35rem .8rem;border-radius:999px}
+nav a:hover{background:rgba(255,255,255,.2);opacity:1}
+main{max-width:900px;margin:2rem auto;background:#fff;padding:2rem;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+.guest main{max-width:400px;margin-top:6rem}
+.guest nav{justify-content:center}
+.guest nav strong{margin:0}
+h2{margin-top:0;color:var(--c)}
+input,select{width:100%;padding:.7rem .9rem;margin:.35rem 0;border:1px solid #d1d5db;border-radius:10px;font:inherit}
+input:focus,select:focus{outline:2px solid var(--c);border-color:transparent}
+button{background:linear-gradient(135deg,var(--c),var(--c2));color:#fff;border:0;padding:.7rem 1.4rem;border-radius:10px;font:inherit;cursor:pointer;margin-top:.5rem}
+button:hover{opacity:.9}
+table{width:100%;border-collapse:collapse;margin-top:1rem}
+th{text-align:left;color:#6b7280;font-weight:500;font-size:.9rem}
+th,td{padding:.8rem .6rem;border-bottom:1px solid #eee}
+tr:hover td{background:#f9fafb}
+td a{background:#eef2ff;color:var(--c);text-decoration:none;padding:.3rem .9rem;border-radius:999px;font-size:.9rem}
+td a:hover{background:var(--c);color:#fff}
+fieldset{border:1px solid #e5e7eb;border-radius:12px;margin:0 0 1.5rem;padding:1rem 1.25rem}
+legend{padding:0 .5rem;font-weight:600;color:var(--c)}
+.err{background:#fef2f2;color:#b91c1c;padding:.7rem 1rem;border-radius:10px}
+.ok{background:#f0fdf4;color:#15803d;padding:.7rem 1rem;border-radius:10px}
+CSS;
+
 function page_start(string $title): void {
     $u = user();
     echo '<!DOCTYPE html><html lang="th"><head><meta charset="UTF-8">'
        . '<meta name="viewport" content="width=device-width,initial-scale=1"><title>' . e($title) . '</title>'
-       . '<style>body{font-family:sans-serif;max-width:820px;margin:2rem auto;padding:0 1rem}'
-       . 'nav{display:flex;gap:1rem;margin-bottom:1.5rem;align-items:center}'
-       . 'table{border-collapse:collapse;width:100%}td,th{border-bottom:1px solid #ddd;padding:.5rem;text-align:left}'
-       . 'input,select,button{padding:.5rem;margin:.25rem 0}.err{color:#b00}.ok{color:#080}'
-       . 'fieldset{margin-bottom:1.5rem}</style></head><body><nav><strong>ห้องสมุดออนไลน์</strong>';
+       . '<link rel="preconnect" href="https://fonts.googleapis.com">'
+       . '<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">'
+       . '<style>' . APP_CSS . '</style></head><body' . ($u ? '' : ' class="guest"') . '>'
+       . '<nav><strong>📚 ห้องสมุดออนไลน์</strong>';
     if ($u) {
         echo '<a href="library.php">หนังสือ</a>';
         if ($u['role'] === 'admin') echo '<a href="admin.php">จัดการระบบ</a>';
         echo '<a href="logout.php">ออกจากระบบ (' . e($u['username']) . ')</a>';
     }
-    echo '</nav>';
+    echo '</nav><main>';
 }
-function page_end(): void { echo '</body></html>'; }
+function page_end(): void { echo '</main></body></html>'; }
