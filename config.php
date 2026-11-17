@@ -19,6 +19,17 @@ function db(): PDO {
                 $pdo->exec('ALTER TABLE books ADD COLUMN hidden TINYINT(1) NOT NULL DEFAULT 0');
             }
         } catch (PDOException $ex) { /* ถ้าไม่มีสิทธิ์ ALTER ให้รัน SQL ใน README เอง */ }
+        // หมวดหมู่หนังสือ: สร้างตาราง categories + คอลัมน์ books.category_id ให้อัตโนมัติ
+        try {
+            $pdo->exec('CREATE TABLE IF NOT EXISTS categories (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                name VARCHAR(100) NOT NULL UNIQUE,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            ) CHARACTER SET utf8mb4');
+            if (!$pdo->query("SHOW COLUMNS FROM books LIKE 'category_id'")->fetch()) {
+                $pdo->exec('ALTER TABLE books ADD COLUMN category_id INT NULL DEFAULT NULL');
+            }
+        } catch (PDOException $ex) { /* ถ้าไม่มีสิทธิ์ ให้รัน schema.sql ส่วนหมวดหมู่เอง */ }
     }
     return $pdo;
 }
@@ -89,6 +100,18 @@ button.danger{background:#fef2f2;color:#b91c1c}
 button.danger:hover{background:#b91c1c;color:#fff;opacity:1}
 .hint{display:block;color:#6b7280;font-size:.85rem;margin-top:.5rem}
 a.cancel{color:#6b7280;margin-left:.5rem;text-decoration:none}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem;margin:1rem 0 .25rem}
+.chip{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem 1rem;border-radius:999px;background:#f3f4f6;color:#374151;text-decoration:none;font-size:.9rem;font-weight:500;border:1px solid transparent;transition:background .15s,color .15s}
+.chip:hover{background:#eef2ff;color:var(--c)}
+.chip.active{background:linear-gradient(135deg,var(--c),var(--c2));color:#fff}
+.chip .n{font-size:.75rem;opacity:.75;font-weight:400}
+.cat-tag{display:inline-block;align-self:flex-start;font-size:.72rem;padding:.1rem .6rem;border-radius:999px;background:#eef2ff;color:var(--c);margin-bottom:.2rem}
+form.search{display:flex;gap:.5rem;align-items:center;margin:.75rem 0 0}
+form.search input{margin:0;flex:1}
+form.search button{margin:0;white-space:nowrap}
+.inline-row{display:flex;gap:.5rem;align-items:center}
+.inline-row input,.inline-row select{margin:.35rem 0}
+.inline-row button{margin:0;white-space:nowrap}
 CSS;
 
 function make_cover(string $pdfName): bool {
