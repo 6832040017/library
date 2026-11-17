@@ -23,4 +23,5 @@ page_start('เข้าสู่ระบบ'); ?>
   <div><input name="password" type="password" placeholder="รหัสผ่าน" required></div>
   <button>เข้าสู่ระบบ</button>
 </form>
+<p style="margin-top:1rem"><a href="signup.php" style="color:var(--c)">ขอใช้งาน (New user)</a></p>
 <?php page_end();
